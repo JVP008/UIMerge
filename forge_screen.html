@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PromptForge | Builder</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed": "#9995ff",
+                        "inverse-on-surface": "#55545b",
+                        "primary-container": "#9995ff",
+                        "on-primary": "#1e009f",
+                        "secondary-fixed": "#79dfff",
+                        "on-primary-container": "#16007d",
+                        "surface-container-low": "#131319",
+                        "secondary-container": "#00677e",
+                        "tertiary-fixed-dim": "#00ed7e",
+                        "surface-tint": "#a8a4ff",
+                        "surface-bright": "#2c2b33",
+                        "on-surface-variant": "#acaab1",
+                        "on-secondary-fixed": "#003a47",
+                        "on-tertiary-fixed": "#004621",
+                        "on-error": "#490013",
+                        "surface-container-highest": "#25252d",
+                        "tertiary-dim": "#00ed7e",
+                        "tertiary": "#a4ffb9",
+                        "tertiary-container": "#00fd87",
+                        "surface-dim": "#0e0e13",
+                        "primary-dim": "#675df9",
+                        "background": "#0e0e13",
+                        "secondary-dim": "#00c3eb",
+                        "outline-variant": "#48474d",
+                        "secondary": "#00d2fd",
+                        "surface": "#0e0e13",
+                        "surface-container-high": "#1f1f26",
+                        "outline": "#76747b",
+                        "on-tertiary-fixed-variant": "#006632",
+                        "on-tertiary-container": "#005b2c",
+                        "error": "#ff6e84",
+                        "on-error-container": "#ffb2b9",
+                        "on-tertiary": "#006532",
+                        "on-primary-fixed": "#000000",
+                        "secondary-fixed-dim": "#1cd5ff",
+                        "on-secondary-fixed-variant": "#00586c",
+                        "primary-fixed-dim": "#8a85ff",
+                        "error-container": "#a70138",
+                        "inverse-primary": "#5044e3",
+                        "surface-container": "#19191f",
+                        "on-surface": "#f9f5fd",
+                        "tertiary-fixed": "#00fd87",
+                        "surface-variant": "#25252d",
+                        "surface-container-lowest": "#000000",
+                        "error-dim": "#d73357",
+                        "primary": "#a8a4ff",
+                        "on-secondary": "#004352",
+                        "on-primary-fixed-variant": "#1d0098",
+                        "inverse-surface": "#fcf8ff",
+                        "on-secondary-container": "#eefaff",
+                        "on-background": "#f9f5fd"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+        .glass-panel {
+            background: rgba(31, 31, 38, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(172, 170, 177, 0.1);
+        }
+        .code-syntax-keyword { color: #a8a4ff; }
+        .code-syntax-string { color: #a4ffb9; }
+        .code-syntax-tag { color: #00d2fd; }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary/30 min-h-screen flex flex-col overflow-hidden">
+<!-- TopAppBar -->
+<header class="bg-[#0e0e13] dark:bg-[#0e0e13] w-full top-0 sticky z-50">
+<div class="flex justify-between items-center px-6 h-16 w-full max-w-[1440px] mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tighter text-[#a8a4ff] font-['Space_Grotesk']">TerminalUI</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-[#f9f5fd] opacity-60 font-['Space_Grotesk'] tracking-tight hover:opacity-100 transition-opacity duration-200" href="#">Explore</a>
+<a class="text-[#f9f5fd] opacity-60 font-['Space_Grotesk'] tracking-tight hover:opacity-100 transition-opacity duration-200" href="#">Leaderboard</a>
+<a class="text-[#a8a4ff] border-b-2 border-[#a8a4ff] pb-1 font-['Space_Grotesk'] tracking-tight" href="#">Build</a>
+<a class="text-[#f9f5fd] opacity-60 font-['Space_Grotesk'] tracking-tight hover:opacity-100 transition-opacity duration-200" href="#">History</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#f9f5fd] opacity-60 hover:opacity-100 transition-opacity duration-200 scale-95 active:transition-transform">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-[#f9f5fd] opacity-60 hover:opacity-100 transition-opacity duration-200 scale-95 active:transition-transform">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex flex-1 overflow-hidden">
+<!-- Left Panel: Section Selector -->
+<aside class="hidden lg:flex flex-col h-full w-72 bg-[#131319] dark:bg-[#131319] border-r border-[#f9f5fd]/10 overflow-y-auto">
+<div class="p-6 border-b border-[#f9f5fd]/5">
+<h2 class="text-lg font-bold text-[#a8a4ff] font-['Space_Grotesk']">UI Categories</h2>
+<p class="text-xs text-[#acaab1] font-['Inter'] uppercase tracking-widest mt-1">Select section to build</p>
+</div>
+<div class="flex flex-col py-4">
+<!-- Nav Item Active -->
+<div class="bg-gradient-to-r from-[#a8a4ff]/20 to-transparent text-[#a8a4ff] border-l-4 border-[#a8a4ff] px-6 py-4 flex flex-col gap-3 group cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">view_day</span>
+<span class="font-['Space_Grotesk'] text-sm font-medium">Navbar</span>
+</div>
+<div class="relative h-24 w-full rounded-lg overflow-hidden bg-surface-container-highest border border-primary/20">
+<img alt="UI Screenshot" class="w-full h-full object-cover opacity-80" data-alt="Close up of a minimalist sleek dark mode user interface navigation bar with purple glow accents and glass effect" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEI9LFVw3v0bhNXB60ytsGorKMDuMo8gxnXeg85zC3T-sVF3AM8ZCUu23Z2982yRQhqq6qcUsWP-sS5eJuX3nukKyPnBFAJt2hR3JKGGx7Mhp4pDPSWv5o6hNOgLKmhsk5wNJ9fohymc19gBzi27PQWXGs-jLCkC7WrLjs_IDiavk9JnA1479boLaXaO88bqCssoMJzIM_3VIYVHMYGwxqlGsuT99Cfy-PRYM480JSdGxwDYRK9YjfPGDERk_RgkCaCQo1Ii0Hq-0"/>
+<div class="absolute bottom-2 right-2 bg-black/60 px-2 py-1 rounded text-[10px] flex items-center gap-1 backdrop-blur-md">
+<span class="material-symbols-outlined text-[12px]">thumb_up</span> 1.2k
+                        </div>
+</div>
+</div>
+<!-- Nav Item Inactive -->
+<div class="text-[#f9f5fd] opacity-50 px-6 py-6 flex flex-col gap-3 hover:bg-[#1f1f26] hover:opacity-100 transition-all cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">web_asset</span>
+<span class="font-['Space_Grotesk'] text-sm font-medium">Hero</span>
+</div>
+<div class="relative h-24 w-full rounded-lg overflow-hidden bg-surface-container-highest border border-white/5">
+<img alt="UI Screenshot" class="w-full h-full object-cover opacity-40 grayscale" data-alt="Abstract geometric shapes in 3D space with cinematic purple and teal lighting and soft gradients" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw2IsIRYTr3_y0XCEPs9aiYiOjVMNVrZpp745fk3buP56697NpIKYdGmEowdEPNAFDazcR-ZVL92MXUshmriCKvoM33mHCayEw9eUFjzBguZuydd62MEi-OBpHVaKe2RjuWMIznuQIH6icqHsEUonCBFg0THMUpVtG2hMm-8PhYIPc-7R6kTIABjob6cNBU-ShhCogBz9bZ123NExmqa1zdMEnVJ2sCZltF2sjqbf8IRnWZeQkYVqVikgYGa3UoknVzmWGHGhyhZI"/>
+<div class="absolute bottom-2 right-2 bg-black/60 px-2 py-1 rounded text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">thumb_up</span> 856
+                        </div>
+</div>
+</div>
+<div class="text-[#f9f5fd] opacity-50 px-6 py-6 flex flex-col gap-3 hover:bg-[#1f1f26] hover:opacity-100 transition-all cursor-pointer border-t border-white/5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">list_alt</span>
+<span class="font-['Space_Grotesk'] text-sm font-medium">Features</span>
+</div>
+</div>
+<div class="text-[#f9f5fd] opacity-50 px-6 py-6 flex flex-col gap-3 hover:bg-[#1f1f26] hover:opacity-100 transition-all cursor-pointer border-t border-white/5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-['Space_Grotesk'] text-sm font-medium">Pricing</span>
+</div>
+</div>
+</div>
+<div class="mt-auto p-6">
+<button class="w-full py-3 bg-gradient-to-br from-primary to-primary-dim text-on-primary font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/10">
+<span class="material-symbols-outlined">add</span>
+                    New Prompt
+                </button>
+</div>
+</aside>
+<!-- Center Panel: AI Builder -->
+<section class="flex-1 flex flex-col h-full bg-surface-container-low min-w-0">
+<!-- Builder Controls -->
+<div class="p-6 flex flex-col gap-4 border-b border-[#f9f5fd]/5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">auto_awesome</span>
+</span>
+<h1 class="text-xl font-bold tracking-tight">AI Builder</h1>
+</div>
+<div class="flex items-center gap-2 text-xs font-mono text-tertiary">
+<span class="flex h-2 w-2 rounded-full bg-tertiary"></span>
+                        LIVE INSTANCE: TERMINAL-04
+                    </div>
+</div>
+<div class="relative group">
+<textarea class="w-full bg-surface-container-highest border-none rounded-xl p-4 font-body text-sm min-h-[120px] focus:ring-1 focus:ring-primary/40 placeholder:text-on-surface-variant/40 resize-none shadow-inner" placeholder="Describe the perfect navbar... e.g., 'A glassmorphic header with a blurred background, primary-fixed buttons, and nested dropdowns for high-end SaaS'"></textarea>
+<button class="absolute bottom-4 right-4 bg-gradient-to-br from-primary to-primary-dim px-6 py-2 rounded-lg text-on-primary font-bold text-sm flex items-center gap-2 hover:opacity-90 transition-all shadow-lg">
+                        Generate
+                        <span class="material-symbols-outlined text-sm">bolt</span>
+</button>
+</div>
+</div>
+<!-- Editor / Preview Split -->
+<div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+<!-- Code Editor -->
+<div class="flex-1 border-r border-[#f9f5fd]/5 flex flex-col min-w-0">
+<div class="h-10 bg-surface-container-high px-4 flex items-center justify-between text-[11px] font-mono tracking-wider text-on-surface-variant/60">
+<span>COMPONENT: NAVBAR_V2.JSX</span>
+<div class="flex items-center gap-3">
+<span class="hover:text-primary cursor-pointer">COPY</span>
+<span class="hover:text-primary cursor-pointer">EXPORT</span>
+</div>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-6 overflow-auto font-mono text-xs leading-relaxed">
+<pre class="text-on-surface-variant"><span class="code-syntax-keyword">const</span> <span class="text-secondary">Navbar</span> = () =&gt; {
+  <span class="code-syntax-keyword">return</span> (
+    <span class="code-syntax-tag">&lt;nav</span> <span class="text-on-surface">className</span>=<span class="code-syntax-string">"sticky top-0 z-50 w-full"</span><span class="code-syntax-tag">&gt;</span>
+      <span class="code-syntax-tag">&lt;div</span> <span class="text-on-surface">className</span>=<span class="code-syntax-string">"glass-panel mx-auto px-6 h-16 flex items-center justify-between"</span><span class="code-syntax-tag">&gt;</span>
+        <span class="code-syntax-tag">&lt;Logo /&gt;</span>
+        <span class="code-syntax-tag">&lt;ul</span> <span class="text-on-surface">className</span>=<span class="code-syntax-string">"flex items-center gap-8"</span><span class="code-syntax-tag">&gt;</span>
+          <span class="code-syntax-tag">&lt;li&gt;</span>Explore<span class="code-syntax-tag">&lt;/li&gt;</span>
+          <span class="code-syntax-tag">&lt;li&gt;</span>Pricing<span class="code-syntax-tag">&lt;/li&gt;</span>
+        <span class="code-syntax-tag">&lt;/ul&gt;</span>
+        <span class="code-syntax-tag">&lt;Button</span> <span class="text-on-surface">variant</span>=<span class="code-syntax-string">"primary"</span><span class="code-syntax-tag">&gt;</span>Get Started<span class="code-syntax-tag">&lt;/Button&gt;</span>
+      <span class="code-syntax-tag">&lt;/div&gt;</span>
+    <span class="code-syntax-tag">&lt;/nav&gt;</span>
+  );
+};
+                        </pre>
+<div class="mt-4 border-t border-white/5 pt-4">
+<div class="flex gap-2">
+<span class="text-tertiary">➜</span>
+<span class="text-on-surface">Compiled successfully.</span>
+</div>
+<div class="flex gap-2 mt-1">
+<span class="text-primary-fixed animate-pulse">_</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Preview Area -->
+<div class="flex-1 bg-[#09090c] flex flex-col min-w-0">
+<div class="h-10 bg-surface-container-high px-4 flex items-center justify-between text-[11px] font-mono tracking-wider text-on-surface-variant/60">
+<span>LIVE PREVIEW</span>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[16px]">devices</span>
+<span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</div>
+</div>
+<div class="flex-1 flex items-center justify-center p-8 bg-[radial-gradient(#1f1f26_1px,transparent_1px)] [background-size:24px_24px]">
+<div class="w-full max-w-lg shadow-2xl rounded-xl overflow-hidden glass-panel">
+<div class="h-12 w-full border-b border-white/5 flex items-center px-4 gap-4">
+<div class="w-3 h-3 rounded-full bg-error/40"></div>
+<div class="w-3 h-3 rounded-full bg-secondary/40"></div>
+<div class="w-3 h-3 rounded-full bg-tertiary/40"></div>
+<div class="bg-surface-container-highest flex-1 h-6 rounded px-2 text-[10px] text-on-surface-variant flex items-center">
+                                    localhost:3000/preview
+                                </div>
+</div>
+<div class="bg-background h-48 p-4 relative flex items-start justify-center">
+<div class="w-full flex items-center justify-between p-3 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-md">
+<div class="font-headline font-bold text-xs text-primary">ARCHITECT.UI</div>
+<div class="flex gap-3 text-[10px] opacity-60">
+<span>Components</span>
+<span>Docs</span>
+</div>
+<button class="px-3 py-1 bg-primary text-on-primary text-[9px] rounded font-bold">START</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Submissions Feed -->
+<aside class="hidden xl:flex flex-col h-full w-80 bg-[#131319] border-l border-[#f9f5fd]/10 overflow-hidden">
+<div class="p-4 bg-surface-container-high border-b border-white/5">
+<div class="flex bg-surface-container-highest p-1 rounded-lg">
+<button class="flex-1 py-1.5 text-[10px] font-bold text-primary bg-surface-container rounded-md">TOP VOTED</button>
+<button class="flex-1 py-1.5 text-[10px] font-bold text-on-surface-variant/60 hover:text-on-surface transition-colors">LATEST</button>
+<button class="flex-1 py-1.5 text-[10px] font-bold text-on-surface-variant/60 hover:text-on-surface transition-colors">AI PICK</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<!-- Feed Card -->
+<div class="group bg-surface-container rounded-xl p-3 border border-transparent hover:border-primary/20 transition-all cursor-pointer">
+<div class="relative h-28 w-full rounded-lg overflow-hidden mb-3">
+<img alt="Cyberpunk UI" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Futuristic neon cyan digital circuit board display with high contrast shadows and technological glow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6pYNHpVd5WKY0oHNVVuPUL_mWo3ov-8w_wffoiI3SZ0yqWwkDY_4jXP9uv9Re0YrXEImvOhCbzzEY9OoRkfAdDqUqQOWagUApHCZ5jwxPr-vzqnAemIVPTRSSDxmCwN-MLQxuOlW3IrKB3QfGowXjWNCmafB6Iyjy9V4Slh-SOLmSpdntc31hgLm0wpItXxb4KnYT4XhsGuKRpIdMDhKTGgy2JHR1to3QxxwquKmsXnNg5Tl_0nMgpxxcBo2Ki0mmWzyouRBd6JQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+</div>
+<div class="flex items-start justify-between">
+<div class="flex gap-2">
+<img class="w-8 h-8 rounded-full border border-white/10" data-alt="Portrait of a modern software engineer professional avatar in studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKjqxz3KeOoBNpeoOTG_QdfsIB10ycewqdcI0vBrnhdTwbrbjVXSgpyEeJ1DxVtcMO2Tbub36EdPIeTteHKPFbR9kVz0J6MCB6cQyALclR1EsUFtiaWmZBl5DYbrvaeI4RPdE8ppzatlkbRXElptKjvf_7aa6A_Sjud5osuDD42sDCDi-Qp9AUFRuTP9TaKHLjRRRm6Qi9ytI8nZOZUepCYraB72cDrg4J9DlyBIjyFF_Cuex_Wo3At4JM_5ZA2t-qPO3c7Ky7uN0"/>
+<div>
+<h3 class="text-sm font-medium font-headline">Neon Glitch Nav</h3>
+<p class="text-[10px] text-on-surface-variant">by @cipher_smith</p>
+</div>
+</div>
+<button class="flex flex-col items-center gap-0.5 group/vote">
+<span class="material-symbols-outlined text-sm text-on-surface-variant group-hover/vote:text-primary transition-colors">arrow_drop_up</span>
+<span class="text-[10px] font-mono text-on-surface-variant">428</span>
+</button>
+</div>
+<p class="mt-2 text-[11px] text-on-surface-variant line-clamp-2 leading-relaxed italic">
+                        "A brutalist sidebar with reactive hover states and a CRT phosphor scanline effect..."
+                    </p>
+</div>
+<!-- Feed Card -->
+<div class="group bg-surface-container rounded-xl p-3 border border-transparent hover:border-primary/20 transition-all cursor-pointer">
+<div class="relative h-28 w-full rounded-lg overflow-hidden mb-3">
+<img alt="Glassmorphic UI" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Translucent glass layers overlapping with vibrant purple and pink light refraction and soft depth of field" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSUyMFwCAx7XaXg0ELDumHWZTQrTJVM1zzX53RWJp5AoLO6l9vhN--gYSONPx-gRsM0SIv_rLUZ52oTt8yxUFiV20decoK3b3JVcRgwfaOzIUZECgFFI8FhFadjW4lnrRVLL41bQAdPhE1kyfb8A30RZ4-QdROgei6bbqSvo1jbroPBzfUA9hngUyXEQXSESmzGwgNy78lrmSgPZ8X9muSjZyjyLbz5SlxwFkLGGUV9Zpxw-_6Sh3YEt-iw6mWa3djRAOgrofgWXw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+</div>
+<div class="flex items-start justify-between">
+<div class="flex gap-2">
+<img class="w-8 h-8 rounded-full border border-white/10" data-alt="Professional woman with a focused expression for a user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMd0pCBu7r2BRsZmrE9CtZANYOaWeAV9DMdGfKp7atWRllWYCo20AhtmN5Y_g9mq3kSjTInDKbrAoNNWSx_GjVjq0LXWmeUUldXxegsSHXBksggKRaRzRiS1ITxH9i9SSWRyaeXSy6EAqfV4klpl1jm07JUF3Vt41O36MDJnic1LbXB5jY3cY0FvRhZedf3PR7kvWElM8I8U_fi3r530egFWyhBdCZoG2R4db37tAX0qhqjAdshRxf8YpwDntLoaBMY2UxTbBM-EY"/>
+<div>
+<h3 class="text-sm font-medium font-headline">Frost Flow</h3>
+<p class="text-[10px] text-on-surface-variant">by @ux_queen</p>
+</div>
+</div>
+<button class="flex flex-col items-center gap-0.5">
+<span class="material-symbols-outlined text-sm text-primary">arrow_drop_up</span>
+<span class="text-[10px] font-mono text-primary">1.1k</span>
+</button>
+</div>
+<p class="mt-2 text-[11px] text-on-surface-variant line-clamp-2 leading-relaxed italic">
+                        "High-end editorial aesthetic with massive typography and liquid motion transitions..."
+                    </p>
+</div>
+</div>
+</aside>
+</main>
+<!-- Contextual Status Bar -->
+<footer class="h-8 bg-primary/5 border-t border-primary/10 flex items-center px-4 justify-between text-[10px] font-mono text-on-surface-variant/80">
+<div class="flex gap-6">
+<span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-tertiary"></span> ENGINE ONLINE</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[12px]">schedule</span> SYNCED 2m AGO</span>
+</div>
+<div class="flex gap-4">
+<span>TERMINAL V1.4.2</span>
+<span class="text-primary-fixed">64.2ms LATENCY</span>
+</div>
+</footer>
+</body></html>

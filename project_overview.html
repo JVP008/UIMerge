@@ -1,0 +1,27 @@
+# PromptForge PRD Summary
+
+## Concept
+A real-time collaborative platform where users compete to build a website using AI-generated code. The website itself is the product.
+
+## Core Loop
+1. **Pick a Section**: Navbar, Hero, Features, Pricing, Footer.
+2. **Prompt**: Describe the design in natural language.
+3. **Generate**: Claude API generates live HTML/CSS/JS.
+4. **Vote**: Community votes on submissions.
+5. **Merge**: Every 24 hours, the top submission becomes the "Live" section.
+
+## Tech Stack
+- **Frontend**: Next.js 14, Tailwind CSS, shadcn/ui.
+- **AI**: Anthropic Claude (Streaming).
+- **Backend**: Supabase (Auth, DB, Realtime, Edge Functions).
+
+## Database Highlights
+- `sections`: Stores current live state and merge timers.
+- `submissions`: Stores prompts, code, AI scores, and vote counts.
+- `votes`: Tracks user votes per submission.
+- `users`: Tracks merged counts, total votes, and badges.
+
+## Design Goals
+- **Aesthetic**: Dark mode, tech/hacker vibe.
+- **Fonts**: Space Grotesk (Display), Inter (Body), JetBrains Mono (Code).
+- **Key UI**: 3-panel builder layout, realtime voting feeds, celebration animations.
